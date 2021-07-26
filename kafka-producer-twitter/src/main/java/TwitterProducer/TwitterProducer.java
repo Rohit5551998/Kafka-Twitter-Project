@@ -104,10 +104,11 @@ public class TwitterProducer {
                 .endpoint(hosebirdEndpoint)
                 .processor(new StringDelimitedProcessor(msgQueue));
 
-        /* Client hosebirdClient = builder.build();
-        return hosebirdClient;*/
+        Client hosebirdClient = builder.build();
+        return hosebirdClient;
 
-        return builder.build();
+        // Reduced return statement
+        // return builder.build();
 
     }
 
@@ -123,12 +124,12 @@ public class TwitterProducer {
         properties.setProperty(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
 
         // create safe producer
-        properties.setProperty(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "true");
+        //properties.setProperty(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "true");
         properties.setProperty(ProducerConfig.ACKS_CONFIG, "all");
         properties.setProperty(ProducerConfig.RETRIES_CONFIG, Integer.toString(Integer.MAX_VALUE));
         properties.setProperty(ProducerConfig.MAX_IN_FLIGHT_REQUESTS_PER_CONNECTION, "5");
 
-        //high throughput producer (at the espense of a bit of latency and CPU usage)
+        //high throughput producer (at the expense of a bit of latency and CPU usage)
         properties.setProperty(ProducerConfig.COMPRESSION_TYPE_CONFIG, "snappy");
         properties.setProperty(ProducerConfig.LINGER_MS_CONFIG, "20");
         properties.setProperty(ProducerConfig.BATCH_SIZE_CONFIG, Integer.toString(32*1024));
